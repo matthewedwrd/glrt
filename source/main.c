@@ -8,12 +8,18 @@
 #include <stdio.h>
 
 GLFWwindow *g_window;
-const int g_width = 800, g_height = 600;
+int g_width = 800, g_height = 600;
 
 GLint g_status;
 
 /* Very basic source code for a vertex shader. */
 const char *g_vertex_shader_source = "#version 330 core" ENDL "layout (location = 0) in vec3 aPos;" ENDL "void main()" ENDL "{" ENDL "gl_Position = vec4(aPos, 1.0);" ENDL "}" ENDL;
+
+/* Callback function for framebuffer size changes. */
+void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
+	glViewport(0, 0, width, height);
+}
 
 int main()
 {
@@ -47,6 +53,9 @@ int main()
 
 	/* Select the window as the current window to work on. */
 	glfwMakeContextCurrent(g_window);
+
+	/* Set the framebuffer size callback. */
+	glfwSetFramebufferSizeCallback(g_window, framebuffer_size_callback);
 
 	/* Load OpenGL context to the window, using GLAD2. */
 	if(gladLoadGL(glfwGetProcAddress) == 0)
@@ -161,15 +170,25 @@ int main()
 	glBindVertexArray(0);
 
 	/* The loop that persists the rendering! */
-	while(!glfwWindowShouldClose(g_window))
+	while (!glfwWindowShouldClose(g_window))
 	{
 		/* Clear the window. */
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		/* Select the shader to be used, and draw the screen-filling quad. */
+		/* Select the shader to be used, and draw a triangle. */
 		glUseProgram(shader_program);
+
+		/* Bind the vertex-array-object. */
 		glBindVertexArray(vao);
+
+		/* Set the uniform values for time and resolution. */
+		float time = (float)glfwGetTime();
+		int width, height;
+		glfwGetFramebufferSize(g_window, &width, &height);
+		glUniform1f(glGetUniformLocation(shader_program, "time"), time);
+		glUniform2f(glGetUniformLocation(shader_program, "resolution"), (float)width, (float)height);
+
+		/* Draw a triangle. */
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		/* Swap buffers & poll events. */
