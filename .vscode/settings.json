@@ -68,6 +68,7 @@
 		"typeinfo": "cpp",
 		"glfw3.h": "c",
 		"xiosbase": "c",
-		"vector.h": "c"
+		"vector.h": "c",
+		"xutility": "c"
 	}
 }
