@@ -1,0 +1,6 @@
+[submodule "glfw"]
+	path = glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "glmath"]
+	path = glmath
+	url = https://github.com/matthewedwrd/glmath.git
