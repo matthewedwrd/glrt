@@ -1,5 +1,6 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include <glmath/vector.h>
 
 #include <glrt/endl.h>
 

@@ -69,6 +69,7 @@
 		"glfw3.h": "c",
 		"xiosbase": "c",
 		"vector.h": "c",
-		"xutility": "c"
+		"xutility": "c",
+		"endl.h": "c"
 	}
 }
